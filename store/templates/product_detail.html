@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<header class="bg-dark py-4">
+    <div class="container px-4 px-lg-4 my-4">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">{{ product.name }}</h1>
+        </div>
+    </div>
+</header>
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row">
+            <!-- Left side - Image -->
+            <div class="col-md-6">
+                <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}" />
+            </div>
+            <!-- Right side - Details -->
+            <div class="col-md-6">
+                <h2 class="fw-bolder">{{ product.name }}</h2>
+                <p class="lead">{{ product.description }}</p>
+                <hr>
+                {% if product.on_sale %}
+                    <span class="badge bg-danger mb-2">On Sale</span><br>
+                    <strike class="text-muted">${{ product.price }}</strike>
+                    <h4 class="text-danger">${{ product.sale_price }}</h4>
+                {% else %}
+                    <h4>${{ product.price }}</h4>
+                {% endif %}
+                <hr>
+                <a href="{% url 'add_to_cart' product.id %}" class="btn btn-dark btn-lg">Add To Cart</a>
+                <a href="{% url 'home' %}" class="btn btn-outline-dark btn-lg ms-2">Back to Shop</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
