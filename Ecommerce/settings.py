@@ -3,7 +3,7 @@ from pathlib import Path
 import os
 load_dotenv()
 import cloudinary
-
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -146,3 +146,10 @@ STORAGES = {
     },
 }
 
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+        conn_max_age=600
+    )
+}
