@@ -34,7 +34,11 @@
                             {{ item.product.description }}
                             <div class =" text-center">
                                  <a href="{% url 'remove_cart' item.id %}" class="btn btn-danger mt-2">Remove</a>
+
                             </div>
+                            <div class="text-center mt-2">
+                                 <a href="{% url 'checkout' %}" class="btn btn-success btn-lg">Checkout</a>
+                             </div>
                         </div>
                     </div>
                 </div>

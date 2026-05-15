@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<header class="bg-dark py-3">
+    <div class="container px-4 px-lg-5 my-3">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Order History</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Your past orders</p>
+        </div>
+    </div>
+</header>
+
+<div class="container mt-5 mb-5">
+    {% if order_items %}
+        {% for order in order_items %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ order.product.image.url }}" class="img-fluid rounded" alt="{{ order.product.name }}">
+                    </div>
+                    <div class="col-md-7">
+                        <h5 class="fw-bolder">{{ order.product.name }}</h5>
+                        <p class="text-muted">{{ order.address }}, {{ order.city }}, {{ order.state }}, {{ order.country }} - {{ order.pincode }}</p>
+                        <p>Phone: {{ order.phone_no }}</p>
+                    </div>
+                    <div class="col-md-3 text-end">
+                        <h5>${{ order.product.price }}</h5>
+                        <span class="badge {% if order.status %}bg-success{% else %}bg-warning{% endif %}">
+                            {% if order.status %}Delivered{% else %}Processing{% endif %}
+                        </span>
+                        <p class="text-muted mt-2"><small>{{ order.date }}</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="text-center mt-5">
+            <h4>No orders yet</h4>
+            <a href="{% url 'home' %}" class="btn btn-dark mt-3">Start Shopping</a>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

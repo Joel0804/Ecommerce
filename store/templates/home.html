@@ -32,11 +32,11 @@
                                     <h5 class="fw-bolder">"{{ product.name }}"</h5>
                                     <!-- Product price-->
                                 <strike>
-                                   ${{ product.price }}
+                                   ₹{{ product.price }}
                                 </strike>
                                 <br>
                                  </br>
-                                    ${{ product.sale_price }}
+                                    ₹{{ product.sale_price }}
                                 </br>
                                 {{ product.description }}
                                 </div>
@@ -50,7 +50,6 @@
                             </div>
                             
                             </div>
-
                         </div>
                     </div>
                     {% else %}
@@ -64,7 +63,7 @@
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">"{{ product.name }}"</h5>
                                     <!-- Product price-->
-                                   ${{ product.price }}
+                                   ₹{{ product.price }}
                                 </br>
                                 {{ product.description }}
                                 </div>
@@ -79,6 +78,7 @@
                             </div>
                         </div>
                     </div>
+
                     {% endif %}
 
         {% endfor %}
