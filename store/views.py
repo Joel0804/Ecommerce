@@ -100,24 +100,24 @@ def checkout(request):
         messages.success(request, "Order placed successfully")
         return redirect('order_history')
     else:
-        total =  sum (item.product.sale_price if item.product.on_sale else item.product.price 
-    for item in checkout_item)
-    
-        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-        
-        razorpay_order = client.order.create({
-            'amount': int(total * 100),  # Razorpay needs amount in paise
-            'currency': 'INR',
-            'payment_capture': 1
-        })
-        
-        return render(request, 'checkout.html', {
-            'cart_items': checkout_item,
-            'razorpay_order_id': razorpay_order['id'],
-            'razorpay_key': settings.RAZORPAY_KEY_ID,
-            'total': total
-        })
-    
+        try:
+            total = sum(item.product.sale_price if item.product.on_sale else item.product.price for item in checkout_item)
+            client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+            razorpay_order = client.order.create({
+                'amount': int(total * 100),
+                'currency': 'INR',
+                'payment_capture': 1
+            })
+            return render(request, 'checkout.html', {
+                'cart_items': checkout_item,
+                'razorpay_order_id': razorpay_order['id'],
+                'razorpay_key': settings.RAZORPAY_KEY_ID,
+                'total': total
+            })
+        except Exception as e:
+            print(f"Checkout error: {e}")
+            return render(request, 'checkout.html', {'cart_items': checkout_item, 'total': 0})
+
 def order_history(request):
      order_item =   Order.objects.filter(customer=request.user)
      return render(request, 'order_history.html', {'order_items': order_item})
