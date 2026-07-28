@@ -10,7 +10,6 @@ import razorpay
 from django.conf import settings
 
 # Create your views here.
-@login_required(login_url='login')
 def home(request):
     products = Product.objects.all()
     return render(request, 'home.html', {'products': products})
@@ -51,18 +50,21 @@ def register_user(request):
         form = SignUpForm() # if user open registered did not post anything
         return render(request, 'register.html', {'form':form})
     
-    
+
+@login_required(login_url='login')
 def add_to_cart(request, product_id):
     product = Product.objects.get(id=product_id) # get products based on id 
     cart_item = Cart(user=request.user , product=product, quantity=1) # this creates new cart with products
     cart_item.save()
     return redirect ('home')
 
- 
+
+@login_required(login_url='login')
 def cart(request):
     cart_display = Cart.objects.filter(user=request.user).order_by('-date') # Get all cart objects belonging to the current logged-in user
     return render(request, 'cart.html', {'cart_displays': cart_display})
 
+@login_required(login_url='login')
 def remove_cart(request, item_id):
     cart_item = Cart.objects.get(id=item_id, user=request.user)
     cart_item.delete()
@@ -74,6 +76,7 @@ def product_detail(request, product_id):
     return render(request, 'product_detail.html', {'product': product} )
     
 
+@login_required(login_url='login')
 def checkout(request):
     checkout_item = Cart.objects.filter(user=request.user) # gets cart objects 
     if request.method == 'POST': # checks user submit
@@ -118,6 +121,7 @@ def checkout(request):
             print(f"Checkout error: {e}")
             return render(request, 'checkout.html', {'cart_items': checkout_item, 'total': 0})
 
+@login_required(login_url='login')
 def order_history(request):
      order_item =   Order.objects.filter(customer=request.user)
      return render(request, 'order_history.html', {'order_items': order_item})
