@@ -9,6 +9,7 @@ from .forms import SignUpForm
 import razorpay
 from django.conf import settings
 from django.http import HttpResponse
+
 # Create your views here.
 def home(request):
     products = Product.objects.all()
@@ -130,3 +131,23 @@ def order_history(request):
  
 def google_verify(request):
     return HttpResponse("google-site-verification: google05375943c8b1778d.html")
+
+
+def robots_txt(request):
+    content = """User-agent: *
+Allow: /
+Allow: /about
+Allow: /product_detail/
+
+Disallow: /cart
+Disallow: /checkout
+Disallow: /login
+Disallow: /register
+Disallow: /logout
+Disallow: /add-to-cart/
+Disallow: /remove_cart/
+Disallow: /order_history
+
+Sitemap: https://ecom-goal-kart.onrender.com/sitemap.xml
+"""
+    return HttpResponse(content, content_type="text/plain")
