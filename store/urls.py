@@ -14,5 +14,6 @@ urlpatterns = [
     path('product_detail/<int:product_id>/', views.product_detail, name='product_detail'),
     path('checkout', views.checkout, name='checkout'),  
     path('order_history', views.order_history, name='order_history'), 
+    path('google05375943c8b1778d.html', views.google_verify, name='google_verify'),
 ] 
 

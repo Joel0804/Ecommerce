@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 import razorpay
 from django.conf import settings
-
+from django.http import HttpResponse
 # Create your views here.
 def home(request):
     products = Product.objects.all()
@@ -125,3 +125,8 @@ def checkout(request):
 def order_history(request):
      order_item =   Order.objects.filter(customer=request.user)
      return render(request, 'order_history.html', {'order_items': order_item})
+ 
+ 
+ 
+def google_verify(request):
+    return HttpResponse("google-site-verification: google05375943c8b1778d.html")
