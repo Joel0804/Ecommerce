@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}{{ product.name }} | Goal Kart{% endblock %}
+{% block meta_description %}{{ product.description|truncatewords:20 }}{% endblock %}
+
 {% block content %}
 <header class="bg-dark py-4">
     <div class="container px-4 px-lg-4 my-4">
