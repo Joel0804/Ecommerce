@@ -16,5 +16,6 @@ urlpatterns = [
     path('order_history', views.order_history, name='order_history'), 
     path('google05375943c8b1778d.html', views.google_verify, name='google_verify'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
+    path('sitemap.xml', views.sitemap_xml, name='sitemap_txt'),
 ] 
 

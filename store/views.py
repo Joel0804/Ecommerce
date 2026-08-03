@@ -151,3 +151,34 @@ Disallow: /order_history
 Sitemap: https://ecom-goal-kart.onrender.com/sitemap.xml
 """
     return HttpResponse(content, content_type="text/plain")
+
+
+
+
+def sitemap_xml(request):
+    products = Product.objects.all()
+    
+    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml_content += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    
+    # Static pages
+    xml_content += '  <url>\n'
+    xml_content += '    <loc>https://ecom-goal-kart.onrender.com/</loc>\n'
+    xml_content += '    <priority>1.0</priority>\n'
+    xml_content += '  </url>\n'
+    
+    xml_content += '  <url>\n'
+    xml_content += '    <loc>https://ecom-goal-kart.onrender.com/about</loc>\n'
+    xml_content += '    <priority>0.5</priority>\n'
+    xml_content += '  </url>\n'
+    
+    # Dynamic product pages
+    for product in products:
+        xml_content += '  <url>\n'
+        xml_content += f'    <loc>https://ecom-goal-kart.onrender.com/product_detail/{product.id}/</loc>\n'
+        xml_content += '    <priority>0.8</priority>\n'
+        xml_content += '  </url>\n'
+    
+    xml_content += '</urlset>'
+    
+    return HttpResponse(xml_content, content_type="application/xml")
